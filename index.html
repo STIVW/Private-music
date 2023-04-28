@@ -98,6 +98,33 @@
 <script src="./progress-bar.js"></script>
 <script src="./player.js"></script>
 <script>
+    var playlist = [];
+    var folderlist = [];
+    var showfolder = "";
+    var currentindex = 0;
+    var currenttime = 0;
+
+    //添加上传音乐表单
+    var uploadForm = document.createElement("form");
+    uploadForm.setAttribute("action", "upload.php");
+    uploadForm.setAttribute("method", "post");
+    uploadForm.setAttribute("enctype", "multipart/form-data");
+
+    var uploadInput = document.createElement("input");
+    uploadInput.setAttribute("type", "file");
+    uploadInput.setAttribute("name", "music_file");
+    uploadInput.setAttribute("accept", "audio/*");
+
+    var uploadButton = document.createElement("button");
+    uploadButton.setAttribute("type", "submit");
+    uploadButton.innerHTML = "上传音乐";
+
+    uploadForm.appendChild(uploadInput);
+    uploadForm.appendChild(uploadButton);
+
+    document.body.insertBefore(uploadForm, document.body.lastChild);
+</script>
+<script>
 function w3_open() {
     document.getElementById("mySidenav").style.display = "block";
     document.getElementById("myOverlay").style.display = "block";
