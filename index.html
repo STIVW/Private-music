@@ -93,8 +93,12 @@
 			<button class="w3-btn w3-tiny" id="btn-order">Order</button>
 		</div>
 	</div>
+    <form action="upload.php" method="post" enctype="multipart/form-data">
+        <input type="file" name="music_filem" id="music_file">
+        <input type="submit" value="Upload" name="submit">
+      </form>
 </div> 
-<form action="upload.php" method="post" enctype="multipart/form-data">
+
 <script src="./progress-bar.js"></script>
 <script src="./player.js"></script>
 <script>
