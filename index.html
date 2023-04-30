@@ -10,6 +10,34 @@
 	#playlist li {word-break: break-all;}
 	.ellipsis {overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
 </style>
+<script src="./player.js"></script>
+<script>
+	    var playlist = [];
+	    var folderlist = [];
+	    var showfolder = "";
+	    var currentindex = 0;
+	    var currenttime = 0;
+    //添加上传音乐表单
+    var uploadForm = document.createElement("form");
+    uploadForm.setAttribute("action", "upload.php");
+    uploadForm.setAttribute("method", "post");
+    uploadForm.setAttribute("enctype", "multipart/form-data");
+
+    var uploadInput = document.createElement("input");
+    uploadInput.setAttribute("type", "file");
+    uploadInput.setAttribute("name", "music_file");
+    uploadInput.setAttribute("accept", "audio/*");
+
+    var uploadButton = document.createElement("button");
+    uploadButton.setAttribute("type", "submit");
+    uploadButton.innerHTML = "上传音乐";
+
+    uploadForm.appendChild(uploadInput);
+    uploadForm.appendChild(uploadButton);
+
+    document.body.insertBefore(uploadForm, document.body.lastChild);
+</script>
+
 <style>
 @media (prefers-color-scheme: dark) {
     * {
@@ -67,6 +95,12 @@
 	</ul>
 	<ul class="w3-ul w3-hoverable" style="margin-bottom: 120px;" id="playlist">
 	</ul>
+	<form action="upload.php" method="post" enctype="multipart/form-data">
+  <label for="music-file">选择要上传的音乐文件:</label>
+  <input type="file" name="music-file" id="music-file">
+  <br>
+  <input type="submit" value="上传">
+</form>
 </div>
 <div class="w3-bottom" style="z-index: 6;">
 	<div class="w3-panel w3-brown">
@@ -93,41 +127,10 @@
 			<button class="w3-btn w3-tiny" id="btn-order">Order</button>
 		</div>
 	</div>
-    <form action="upload.php" method="post" enctype="multipart/form-data">
-        <input type="file" name="music_filem" id="music_file">
-        <input type="submit" value="Upload" name="submit">
-      </form>
 </div> 
 
 <script src="./progress-bar.js"></script>
 <script src="./player.js"></script>
-<script>
-    var playlist = [];
-    var folderlist = [];
-    var showfolder = "";
-    var currentindex = 0;
-    var currenttime = 0;
-
-    //添加上传音乐表单
-    var uploadForm = document.createElement("form");
-    uploadForm.setAttribute("action", "upload.php");
-    uploadForm.setAttribute("method", "post");
-    uploadForm.setAttribute("enctype", "multipart/form-data");
-
-    var uploadInput = document.createElement("input");
-    uploadInput.setAttribute("type", "file");
-    uploadInput.setAttribute("name", "music_file");
-    uploadInput.setAttribute("accept", "audio/*");
-
-    var uploadButton = document.createElement("button");
-    uploadButton.setAttribute("type", "submit");
-    uploadButton.innerHTML = "上传音乐";
-
-    uploadForm.appendChild(uploadInput);
-    uploadForm.appendChild(uploadButton);
-
-    document.body.insertBefore(uploadForm, document.body.lastChild);
-</script>
 <script>
 function w3_open() {
     document.getElementById("mySidenav").style.display = "block";
