@@ -1,70 +1,31 @@
 <?php
-$target_dir = "uploads/";
-$target_file = $target_dir . basename($_FILES["music_file"]["name"]);
+$target_dir = "/var/www/html/private-music/uploads/";
+$target_file = $target_dir . basename($_FILES["file"]["name"]);
 $uploadOk = 1;
-$audioFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
-
-// Check if file is a valid audio file
-if(isset($_POST["submit"])) {
-    $check = getID3($target_file);
-    if($check["fileformat"] !== "mp3" && $check["fileformat"] !== "ogg" && $check["fileformat"] !== "wav") {
-        $uploadOk = 0;
-        $response = array(
-            "success" => false,
-            "message" => "文件格式不支持"
-        );
-    }
+$fileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
+// 检查是否是一个音乐文件
+if($fileType != "mp3" && $fileType != "ogg" && $fileType != "wav") {
+    echo "只允许上传MP3、OGG或WAV格式的音乐文件。";
+    $uploadOk = 0;
 }
-
-// Check if file already exists
+// 检查文件是否已经存在
 if (file_exists($target_file)) {
+    echo "该文件已经存在。";
     $uploadOk = 0;
-    $response = array(
-        "success" => false,
-        "message" => "文件已存在"
-    );
 }
-
-// Check file size
-if ($_FILES["music_file"]["size"] > 50000000) {
+// 检查文件大小
+if ($_FILES["file"]["size"] > 5000000) {
+    echo "文件太大，不能上传超过5MB的文件。";
     $uploadOk = 0;
-    $response = array(
-        "success" => false,
-        "message" => "文件过大"
-    );
 }
-
-// Check if $uploadOk is set to 0 by an error
+// 如果存在错误，停止上传
 if ($uploadOk == 0) {
-    $response = array(
-        "success" => false,
-        "message" => "上传失败"
-    );
-// if everything is ok, try to upload file
+    echo "文件没有上传。";
 } else {
-    if (move_uploaded_file($_FILES["music_file"]["tmp_name"], $target_file)) {
-        // File upload success
-        $response = array(
-            "success" => true,
-            "message" => "文件上传成功"
-        );
-        
-        // Add new track to playlist
-        $filename = basename($target_file);
-        $newTrack = array(
-            "name" => "New Song",
-            "artist" => "Unknown",
-            "file" => "uploads/" . $filename
-        );
-        array_push($playlist, $newTrack);
-        
+    if (move_uploaded_file($_FILES["file"]["tmp_name"], $target_file)) {
+        echo "文件". basename( $_FILES["file"]["name"]). "上传成功。";
     } else {
-        // File upload failed
-        $response = array(
-            "success" => false,
-            "message" => "上传失败"
-        );
+        echo "上传文件时出现了错误。";
     }
 }
-echo json_encode($response);
 ?>
